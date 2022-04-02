@@ -165,6 +165,7 @@ String Get_Loc() {
   //Google-Geolocation-API
   return "[24.608011162714778,73.71797541150313]";
 }
+
 //--------------------------------------------------------------------------------------------------------------
 
 void setup() {
@@ -202,8 +203,6 @@ void setup() {
   Serial.print("\n All Updates emmited \n");
   LittleFS.end();
 }
-
-
 
 void loop() {
   //pass
