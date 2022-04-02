@@ -25,4 +25,3 @@ Integrated Open-Source Firmware for LumiLight
   - Open the Arduino Library Manager, Search for “ArduinoJson”, Click install.
   - Select Board : NodeMCU 12E
   - Upload NodeMCU_Firmare.ino
-

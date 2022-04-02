@@ -102,6 +102,32 @@ String Get_Init() {
   }
 }
 
+bool Post_Update(String ID, bool State, String Loc) {
+  WiFiClient client;
+  HTTPClient http;
+  String URL = API_URL + "/update";
+  http.begin(client, URL);
+  http.addHeader("Content-Type", "application/json");
+  String Json = "{";
+  Json = Json + " \"ID\" : " + ID + " , ";
+  if (State) {
+    Json = Json + " \"Status\" : true  , ";
+  } else {
+    Json = Json + " \"Status\" : false , ";
+  }
+  Json = Json + " \"Loc\" : " + Loc;
+  Json = Json + "}";
+  Serial.print("\n" + Json + "\n");
+  int httpResponseCode = http.POST(Json);
+  if (httpResponseCode == 201) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+
 
 void loop() {
   //pass
