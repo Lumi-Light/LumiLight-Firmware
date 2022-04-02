@@ -86,6 +86,22 @@ void WIFI() {
   }
 }
 
+//---------------------------------------------------HTTP_REQUEST-----------------------------------------------
+
+String Get_Init() {
+  WiFiClient client;
+  HTTPClient http;
+  String URL = API_URL + "/init";
+  http.begin(client, URL);
+  int httpResponseCode = http.GET();
+  if (httpResponseCode == 201) {
+    String payload = http.getString();
+    return payload;
+  } else {
+    ESP.restart();
+  }
+}
+
 
 void loop() {
   //pass
