@@ -148,6 +148,18 @@ void Set_State(int state) {
   f.close();
 }
 
+int Get_State() {
+  File f = LittleFS.open("/State.txt", "r");
+  String value = f.readStringUntil('\n');
+  f.close();
+  if (value == "") {
+    Set_State(0);
+    value = "0";
+  }
+  return value.toInt();
+}
+
+
 
 
 void loop() {
