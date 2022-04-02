@@ -30,6 +30,33 @@ bool encode(int state) {
   }
 }
 
+//---------------------------------------AUTO_WIFI----------------------------------------------------------
+
+void scanAndSort() {
+  memset(ssid, 0, MAX_SSID_LEN);
+  int n = WiFi.scanNetworks();
+  if (n != 0) {
+    int indices[n];
+    for (int i = 0; i < n; i++) {
+      indices[i] = i;
+    }
+    for (int i = 0; i < n; i++) {
+      for (int j = i + 1; j < n; j++) {
+        if (WiFi.RSSI(indices[j]) > WiFi.RSSI(indices[i])) {
+          std::swap(indices[i], indices[j]);
+        }
+      }
+    }
+    for (int i = 0; i < n; ++i) {
+      if (WiFi.encryptionType(indices[i]) == ENC_TYPE_NONE) {
+        memset(ssid, 0, MAX_SSID_LEN);
+        strncpy(ssid, WiFi.SSID(indices[i]).c_str(), MAX_SSID_LEN);
+        break;
+      }
+    }
+  }
+}
+
 
 void loop() {
   //pass
