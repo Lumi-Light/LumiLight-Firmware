@@ -77,6 +77,14 @@ void Connect() {
   }
 }
 
+void WIFI() {
+  Connect();
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print("\n Trying to Connect with nearby networks........ \n");
+    delay(REFRESH);
+    Connect();
+  }
+}
 
 
 void loop() {
