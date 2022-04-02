@@ -126,6 +126,22 @@ bool Post_Update(String ID, bool State, String Loc) {
   }
 }
 
+//------------------------------------------------GET-INFO--------------------------------------------------------------------
+
+String Get_ID() {
+  File f = LittleFS.open("/ID.txt", "r");
+  String value = f.readStringUntil('\n');
+  f.close();
+  if (value == "") {
+    String id = Get_Init();
+    File f = LittleFS.open("/ID.txt", "w");
+    f.println(id);
+    f.close();
+    value = id;
+  }
+  return value;
+}
+
 
 
 
