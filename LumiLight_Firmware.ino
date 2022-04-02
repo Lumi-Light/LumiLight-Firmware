@@ -142,6 +142,11 @@ String Get_ID() {
   return value;
 }
 
+void Set_State(int state) {
+  File f = LittleFS.open("/State.txt", "w");
+  f.println(String(state));
+  f.close();
+}
 
 
 
