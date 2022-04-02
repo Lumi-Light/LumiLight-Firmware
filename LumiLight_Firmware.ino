@@ -159,6 +159,13 @@ int Get_State() {
   return value.toInt();
 }
 
+String Get_Loc() {
+  //Google-Geolocation-API
+    //Under-Work
+  //Google-Geolocation-API
+  return "[24.608011162714778,73.71797541150313]";
+}
+
 
 
 
