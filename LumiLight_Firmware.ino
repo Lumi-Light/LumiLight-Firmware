@@ -165,7 +165,43 @@ String Get_Loc() {
   //Google-Geolocation-API
   return "[24.608011162714778,73.71797541150313]";
 }
+//--------------------------------------------------------------------------------------------------------------
 
+void setup() {
+  Serial.begin(SERIAL_BAUD);
+  pinMode(LDR, INPUT);
+  pinMode(LED, OUTPUT);
+  LittleFS.begin();
+  delay(REFRESH);
+
+  sensorValue = digitalRead(LDR);
+  Prev_sensorValue = Get_State();
+  bool report = sensorValue != Prev_sensorValue;
+  if (report) {
+    digitalWrite(LED, HIGH);
+    Serial.print("\n Update Required \n");
+    Serial.print("\n Connecting to Wifi \n");
+    WIFI();
+    Serial.print("\n Connected to Wifi \n");
+    delay(5000);
+    String ID = Get_ID();
+    String Loc = Get_Loc();
+    bool State = encode(sensorValue);
+    if (Post_Update(ID, State, Loc)) {
+      Serial.print("\n Update-Pushed \n");
+      Set_State(sensorValue);
+      WiFi.softAPdisconnect();
+      WiFi.disconnect();
+      Serial.print("\n Disconnected \n");
+      digitalWrite(LED, LOW);
+    } else {
+      Serial.print("\n Update not Required \n");
+      ESP.restart();
+    }
+  }
+  Serial.print("\n All Updates emmited \n");
+  LittleFS.end();
+}
 
 
 
