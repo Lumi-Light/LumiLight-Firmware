@@ -57,6 +57,27 @@ void scanAndSort() {
   }
 }
 
+void Connect() {
+  if (WiFi.status() != WL_CONNECTED) {
+    WiFi.softAPdisconnect();
+    WiFi.disconnect();
+    WiFi.mode(WIFI_STA);
+    delay(WIFI_DELAY);
+    scanAndSort();
+    delay(WIFI_DELAY);
+    if (strlen(ssid) > 0) {
+      WiFi.begin(ssid);
+      unsigned short try_cnt = 0;
+      while (WiFi.status() != WL_CONNECTED && try_cnt < MAX_CONNECT_TIME / WIFI_DELAY) {
+        delay(WIFI_DELAY);
+        Serial.print(".");
+        try_cnt++;
+      }
+    }
+  }
+}
+
+
 
 void loop() {
   //pass
